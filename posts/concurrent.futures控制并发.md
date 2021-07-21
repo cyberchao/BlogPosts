@@ -5,6 +5,97 @@ categories: ['Python']
 tags: ["python","并发"]
 ---
 
+### concurrent.futures是什么？
+
+concurrent.futures模块提供给开发者一个执行异步调用的高级接口。concurrent.futures基本上就是在Python的threading和multiprocessing模块之上构建的抽象层，更易于使用。
+
+concurrent.futures包括抽象类Executor，它并不能直接被使用，所以你需要使用它的两个子类：ThreadPoolExecutor或者ProcessPoolExecutor。
+
+线程池或进程池是用于在程序中优化和简化线程/进程的使用。通过池，你可以提交任务给executor。池由两部分组成，一部分是内部的队列，存放着待执行的任务；另一部分是一系列的进程或线程，用于执行这些任务。池的概念主要目的是为了重用：让线程或进程在生命周期内可以多次使用。它减少了创建创建线程和进程的开销，提高了程序性能。重用不是必须的规则，但它是程序员在应用中使用池的主要原因。 
+
+![../_images/pooling-management.png](https://python-parallel-programmning-cookbook.readthedocs.io/zh_CN/latest/_images/pooling-management.png) 
+
+### 使用进程池还是线程池？
+
+这有一个例子
+
+```python
+import concurrent.futures
+import time
+number_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+def evaluate_item(x):
+        # 计算总和，这里只是为了消耗时间
+        result_item = count(x)
+        # 打印输入和输出结果
+        return result_item
+
+def  count(number) :
+        for i in range(0, 10000000):
+                i=i+1
+        return i * number
+
+if __name__ == "__main__":
+        # 顺序执行
+        start_time = time.time()
+        for item in number_list:
+                print(evaluate_item(item))
+        print("Sequential execution in " + str(time.time() - start_time), "seconds")
+        # 线程池执行
+        start_time_1 = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+                futures = [executor.submit(evaluate_item, item) for item in number_list]
+                for future in concurrent.futures.as_completed(futures):
+                        print(future.result())
+        print ("Thread pool execution in " + str(time.time() - start_time_1), "seconds")
+        # 进程池
+        start_time_2 = time.time()
+        with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
+                futures = [executor.submit(evaluate_item, item) for item in number_list]
+                for future in concurrent.futures.as_completed(futures):
+                        print(future.result())
+        print ("Process pool execution in " + str(time.time() - start_time_2), "seconds")
+        
+output---
+10000000
+20000000
+30000000
+40000000
+50000000
+60000000
+70000000
+80000000
+90000000
+100000000
+Sequential execution in 4.697415590286255 seconds
+10000000
+30000000
+40000000
+50000000
+20000000
+60000000
+70000000
+80000000
+90000000
+100000000
+Thread pool execution in 4.338747262954712 seconds
+10000000
+20000000
+40000000
+50000000
+30000000
+60000000
+80000000
+90000000
+70000000
+100000000
+Process pool execution in 1.3198800086975098 seconds
+```
+
+可以看到使用线程池的速度和普通轮询结果没什么区别，进程池就快了很多。因为python GIL的存在，多线程其实是伪并发，其实自始至终都只有一个线程再执行，所以以上这个计算密集型的例子使用线程不会有速度提升。但是io密集型的任务由于网络延迟，磁盘io等需要等待的原因，使用多线程会更好。
+
+由于工作性质，绝大多数情况下是与操作系统io打交道，这里就简单介绍下ThreadPoolExecutor的使用方法，ProcessPoolExecutor同理。
+
 ### 1.使用ThreadPoolExecutor
 
 `submit()`
