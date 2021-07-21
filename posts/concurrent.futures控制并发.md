@@ -9,7 +9,7 @@ tags: ["python","并发"]
 
 `submit`()
 
-​	调度可调用对象 *fn*，以 `fn(*args **kwargs)` 方式执行并返回 [`Future`](https://docs.python.org/zh-cn/3/library/concurrent.futures.html#concurrent.futures.Future) 对象代表可调用对象的执行。:
+	调度可调用对象 *fn*，以 `fn(*args **kwargs)` 方式执行并返回 [`Future`](https://docs.python.org/zh-cn/3/library/concurrent.futures.html#concurrent.futures.Future) 对象代表可调用对象的执行。:
 
 ```python
 from concurrent import futures
@@ -39,7 +39,7 @@ output---
 
 `shutdown`()
 
-​	当待执行的 future 对象完成执行后向执行者发送信号，它就会释放正在使用的任何资源。
+	当待执行的 future 对象完成执行后向执行者发送信号，它就会释放正在使用的任何资源。
 
 ```python
 from concurrent import futures
@@ -92,7 +92,7 @@ output---
 
 `result`(*timeout=None*)
 
-​	返回调用返回的值。如果调用还没完成那么这个方法将等待 *timeout* 秒。
+	返回调用返回的值。如果调用还没完成那么这个方法将等待 *timeout* 秒。
 
 ```python
 from concurrent import futures
@@ -155,7 +155,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
 
 `exception`(*timeout=None*) 
 
-​	返回由调用引发的异常。 如果调用还没完成那么这个方法将等待 timeout 秒
+	返回由调用引发的异常。 如果调用还没完成那么这个方法将等待 timeout 秒
 
 ```python
 from concurrent import futures
@@ -189,7 +189,7 @@ unsupported operand type(s) for +: 'int' and 'str'
 
 `add_done_callback`(*fn*)
 
-​	附加可调用 fn 到 future 对象。当 future 对象被取消或完成运行时，将会调用 fn，而这个 future 对象将作为它唯一的参数。
+	附加可调用 fn 到 future 对象。当 future 对象被取消或完成运行时，将会调用 fn，而这个 future 对象将作为它唯一的参数。
 
 ```python
 from concurrent import futures
