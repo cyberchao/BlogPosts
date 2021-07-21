@@ -7,9 +7,9 @@ tags: ["python","并发"]
 
 ### 1.使用ThreadPoolExecutor
 
-`submit`()
+`submit()`
 
-​	调度可调用对象 *fn*，以 `fn(*args **kwargs)` 方式执行并返回 [`Future`](https://docs.python.org/zh-cn/3/library/concurrent.futures.html#concurrent.futures.Future) 对象代表可调用对象的执行。:
+调度可调用对象 *fn*，以 `fn(*args **kwargs)` 方式执行并返回 [`Future`](https://docs.python.org/zh-cn/3/library/concurrent.futures.html#concurrent.futures.Future) 对象代表可调用对象的执行。:
 
 ```python
 from concurrent import futures
@@ -37,9 +37,9 @@ output---
 
 ### 2.等待future 对象执行完成
 
-`shutdown`()
+`shutdown()`
 
-​	当待执行的 future 对象完成执行后向执行者发送信号，它就会释放正在使用的任何资源。
+当待执行的 future 对象完成执行后向执行者发送信号，它就会释放正在使用的任何资源。
 
 ```python
 from concurrent import futures
@@ -90,9 +90,9 @@ output---
 
 ### 3.获取返回结果
 
-`result`(*timeout=None*)
+`result(*timeout=None*)`
 
-​	返回调用返回的值。如果调用还没完成那么这个方法将等待 *timeout* 秒。
+返回调用返回的值。如果调用还没完成那么这个方法将等待 *timeout* 秒。
 
 ```python
 from concurrent import futures
@@ -153,9 +153,9 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
 
 ### 4.捕获异常
 
-`exception`(*timeout=None*) 
+`exception(*timeout=None*) `
 
-​	返回由调用引发的异常。 如果调用还没完成那么这个方法将等待 timeout 秒
+返回由调用引发的异常。 如果调用还没完成那么这个方法将等待 timeout 秒
 
 ```python
 from concurrent import futures
