@@ -1,5 +1,5 @@
 ---
-title: 使用concurrent.futures控制并发
+title: concurrent.futures控制并发
 date: 2021-07-21T21:42:42+00:00
 categories: ['Python']
 tags: ["python","并发"]
