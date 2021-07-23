@@ -1,5 +1,6 @@
 ---
 title: go+vue实现web实时打印主机日志(二)
+date: 2021-07-23T16:55:42+00:00
 categories: ['Go']
 tags: ["go","websocket"]
 ---
